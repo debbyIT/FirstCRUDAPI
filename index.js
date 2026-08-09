@@ -3,6 +3,7 @@ const { truncate } = require('node:fs');
 const app = express();
 const port = 3000;
 
+app.use(express.json());
 
 const tasks= [
     { "id": 1, "title": "Write Code", "done": true },
@@ -40,6 +41,21 @@ app.get('/tasks/:id', (req, res) => {
         res.status(404).json({ "error": `Task ${taskId} not found` });
     }
 
+});
+
+app.post('/tasks', (req, res) => {
+
+    const {title} = req.body;
+    if(!title){
+        res.status(400).json({"error": "Title is required"});
+    }
+    const newTask ={
+        id: tasks.length + 1,
+        title: title,
+        done: false
+    };
+    tasks.push(newTask);
+    res.status(201).json(newTask);
 });
 
 app.listen(port, ()=>{
