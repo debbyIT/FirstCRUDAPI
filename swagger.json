@@ -1,0 +1,179 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Task API",
+    "description": "API for managing tasks",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "API Home Page",
+        "description": "Returns basic information about the Task API",
+        "responses": {
+          "200": {
+            "description": "API information returned successfully"
+          }
+        }
+      }
+    },
+
+    "/health": {
+      "get": {
+        "summary": "Health Check",
+        "description": "Checks whether the API is running",
+        "responses": {
+          "200": {
+            "description": "API is healthy"
+          }
+        }
+      }
+    },
+
+    "/tasks": {
+      "get": {
+        "summary": "Get all tasks",
+        "description": "Returns all tasks",
+        "responses": {
+          "200": {
+            "description": "Tasks retrieved successfully"
+          }
+        }
+      },
+
+      "post": {
+        "summary": "Create a new task",
+        "description": "Creates a new task",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Buy milk"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Task created successfully"
+          },
+          "400": {
+            "description": "Title is required"
+          }
+        }
+      }
+    },
+
+    "/tasks/{id}": {
+      "get": {
+        "summary": "Get task by ID",
+        "description": "Returns a task using its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the task",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task found successfully"
+          },
+          "404": {
+            "description": "Task not found"
+          }
+        }
+      },
+
+      "put": {
+        "summary": "Update a task",
+        "description": "Updates a task using its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the task",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Buy groceries"
+                  },
+                  "done": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task updated successfully"
+          },
+          "400": {
+            "description": "Request body is empty"
+          },
+          "404": {
+            "description": "Task not found"
+          }
+        }
+      },
+
+      "delete": {
+        "summary": "Delete a task",
+        "description": "Deletes a task using its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the task",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Task deleted successfully"
+          },
+          "404": {
+            "description": "Task not found"
+          }
+        }
+      }
+    }
+  }
+}

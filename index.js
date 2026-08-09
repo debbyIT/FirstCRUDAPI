@@ -1,7 +1,21 @@
 const express = require('express');
-const { truncate } = require('node:fs');
+
 const app = express();
+
 const port = 3000;
+
+const swaggerUi = require('swagger-ui-express');
+
+const swaggerDocument = require('./swagger.json');
+
+var options = {
+  explorer: true
+};
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
+
 
 app.use(express.json());
 
